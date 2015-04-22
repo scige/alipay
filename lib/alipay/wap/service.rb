@@ -25,7 +25,7 @@ module Alipay
           'v'        => '2.0'
         }.merge(params)
 
-        xml = Net::HTTP.get(request_uri(params, options))
+        xml = request_uri(params, options).to_s
         CGI.unescape(xml).scan(/\<request_token\>(.*)\<\/request_token\>/).flatten.first
       end
 
