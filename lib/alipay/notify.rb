@@ -13,7 +13,14 @@ module Alipay
         'partner'   => pid,
         'notify_id' => notify_id
       )
-      Net::HTTP.get(uri) == 'true'
+
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      response = http.get(uri.request_uri)
+      response.body == 'true'
+
+      #Net::HTTP.get(uri) == 'true'
     end
   end
 end
